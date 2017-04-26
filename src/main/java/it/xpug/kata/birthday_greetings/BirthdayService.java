@@ -18,15 +18,16 @@ public class BirthdayService {
 			String[] employeeData = str.split(", ");
 			Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], employeeData[3]);
 			if (employee.isBirthday(xDate)) {
-				String recipient = employee.getEmail();
-				String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
-				String subject = "Happy Birthday!";
-				sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient);
+				sendMessage(smtpHost, smtpPort, employee);
 			}
 		}
 	}
 
-	protected void sendMessage(String smtpHost, int smtpPort, String sender, String subject, String body, String recipient) throws AddressException, MessagingException {
+	protected void sendMessage(String smtpHost, int smtpPort, Employee employee) throws AddressException, MessagingException {
+		String recipient = employee.getEmail();
+		String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
+		String subject = "Happy Birthday!";
+		String sender = "sender@here.com";
 		new MailSender(smtpHost, smtpPort).sendMessage(sender, subject, body, recipient);
 	}
 }
