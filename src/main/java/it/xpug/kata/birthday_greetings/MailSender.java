@@ -18,7 +18,12 @@ public class MailSender {
         this.smtpPort = smtpPort;
     }
 
-    public void sendMessage(String sender, String subject, String body, String recipient) throws AddressException, MessagingException {
+    public void sendGreetingsTo(Employee employee) throws AddressException, MessagingException {
+        String recipient = employee.getEmail();
+        String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
+        String subject = "Happy Birthday!";
+        String sender = "sender@here.com";
+
         // Create a mail session
         Properties props = new Properties();
         props.put("mail.smtp.host", smtpHost);

@@ -24,10 +24,6 @@ public class BirthdayService {
 	}
 
 	protected void sendMessage(String smtpHost, int smtpPort, Employee employee) throws AddressException, MessagingException {
-		String recipient = employee.getEmail();
-		String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
-		String subject = "Happy Birthday!";
-		String sender = "sender@here.com";
-		new MailSender(smtpHost, smtpPort).sendMessage(sender, subject, body, recipient);
+		new MailSender(smtpHost, smtpPort).sendGreetingsTo(employee);
 	}
 }
