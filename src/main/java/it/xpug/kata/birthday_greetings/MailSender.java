@@ -9,7 +9,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class MailSender {
+public class MailSender implements Sender {
     private String smtpHost;
     private int smtpPort;
 
@@ -18,6 +18,7 @@ public class MailSender {
         this.smtpPort = smtpPort;
     }
 
+    @Override
     public void sendGreetingsTo(Employee employee) throws AddressException, MessagingException {
         String recipient = employee.getEmail();
         String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());

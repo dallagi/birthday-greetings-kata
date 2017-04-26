@@ -1,47 +1,41 @@
 package it.xpug.kata.birthday_greetings;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BirthdayServiceTest {
 
-    private static final int NONSTANDARD_PORT = 9999;
+    @Mock
+    private Sender sender;
 
     @Test
     public void should_send_message() throws Exception {
         BirthdayService birthdayService = new BirthdayService();
 
-        SpyMailSender mailSender = new SpyMailSender();
-        birthdayService.sendGreetings("employee_data.txt", new XDate("2008/10/08"), mailSender);
+        birthdayService.sendGreetings("employee_data.txt", new XDate("2008/10/08"), sender);
 
-        assertTrue(mailSender.greetingsSent);
+        verify(sender).sendGreetingsTo(any(Employee.class));
     }
 
     @Test
     public void should_not_send_message() throws Exception {
         BirthdayService birthdayService = new BirthdayService();
 
-        SpyMailSender mailSender = new SpyMailSender();
-        birthdayService.sendGreetings("employee_data.txt", new XDate("2008/01/01"), mailSender);
+        birthdayService.sendGreetings("employee_data.txt", new XDate("2008/01/01"), sender);
 
-        assertFalse(mailSender.greetingsSent);
-    }
-
-    private class SpyMailSender extends MailSender {
-        public boolean greetingsSent = false;
-
-        public SpyMailSender() {
-            super(null, -1);
-        }
-
-        @Override
-        public void sendGreetingsTo(Employee employee) throws AddressException, MessagingException {
-            greetingsSent = true;
-        }
+        verify(sender, never()).sendGreetingsTo(any(Employee.class));
     }
 }
