@@ -33,7 +33,7 @@ public class BirthdayServiceTest {
         public boolean messageSent = false;
 
         @Override
-        protected void sendMessage(String smtpHost, int smtpPort, Employee employee) throws AddressException, MessagingException {
+        protected void sendMessage(Employee employee, MailSender mailSender) throws AddressException, MessagingException {
             messageSent = true;
         }
     }
