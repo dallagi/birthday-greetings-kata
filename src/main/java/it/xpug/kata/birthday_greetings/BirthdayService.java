@@ -10,8 +10,6 @@ import javax.mail.internet.AddressException;
 
 public class BirthdayService {
 
-	private final MailSender mailSender = new MailSender();
-
 	public void sendGreetings(String fileName, XDate xDate, String smtpHost, int smtpPort) throws IOException, ParseException, AddressException, MessagingException {
 		BufferedReader in = new BufferedReader(new FileReader(fileName));
 		String str = "";
@@ -29,6 +27,6 @@ public class BirthdayService {
 	}
 
 	protected void sendMessage(String smtpHost, int smtpPort, String sender, String subject, String body, String recipient) throws AddressException, MessagingException {
-		mailSender.sendMessage(smtpHost, smtpPort, sender, subject, body, recipient);
+		new MailSender(smtpHost, smtpPort).sendMessage(sender, subject, body, recipient);
 	}
 }

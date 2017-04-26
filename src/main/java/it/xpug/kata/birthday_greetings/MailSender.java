@@ -10,10 +10,15 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class MailSender {
-    public MailSender() {
+    private String smtpHost;
+    private int smtpPort;
+
+    public MailSender(String smtpHost, int smtpPort) {
+        this.smtpHost = smtpHost;
+        this.smtpPort = smtpPort;
     }
 
-    protected void sendMessage(String smtpHost, int smtpPort, String sender, String subject, String body, String recipient) throws AddressException, MessagingException {
+    public void sendMessage(String sender, String subject, String body, String recipient) throws AddressException, MessagingException {
         // Create a mail session
         Properties props = new Properties();
         props.put("mail.smtp.host", smtpHost);
