@@ -20,6 +20,15 @@ public class BirthdayServiceTest {
         assertTrue(birthdayService.messageSent);
     }
 
+    @Test
+    public void should_not_send_message() throws Exception {
+        TestableBirthdayService birthdayService = new TestableBirthdayService();
+
+        birthdayService.sendGreetings("employee_data.txt", new XDate("2008/01/01"), "localhost", NONSTANDARD_PORT);
+
+        assertFalse(birthdayService.messageSent);
+    }
+
     private class TestableBirthdayService extends BirthdayService {
         public boolean messageSent = false;
 
