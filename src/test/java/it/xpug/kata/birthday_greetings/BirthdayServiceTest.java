@@ -5,7 +5,8 @@ import org.junit.Test;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class BirthdayServiceTest {
 
@@ -13,28 +14,34 @@ public class BirthdayServiceTest {
 
     @Test
     public void should_send_message() throws Exception {
-        TestableBirthdayService birthdayService = new TestableBirthdayService();
+        BirthdayService birthdayService = new BirthdayService();
 
-        birthdayService.sendGreetings("employee_data.txt", new XDate("2008/10/08"), "localhost", NONSTANDARD_PORT);
+        SpyMailSender mailSender = new SpyMailSender();
+        birthdayService.sendGreetings("employee_data.txt", new XDate("2008/10/08"), mailSender);
 
-        assertTrue(birthdayService.messageSent);
+        assertTrue(mailSender.greetingsSent);
     }
 
     @Test
     public void should_not_send_message() throws Exception {
-        TestableBirthdayService birthdayService = new TestableBirthdayService();
+        BirthdayService birthdayService = new BirthdayService();
 
-        birthdayService.sendGreetings("employee_data.txt", new XDate("2008/01/01"), "localhost", NONSTANDARD_PORT);
+        SpyMailSender mailSender = new SpyMailSender();
+        birthdayService.sendGreetings("employee_data.txt", new XDate("2008/01/01"), mailSender);
 
-        assertFalse(birthdayService.messageSent);
+        assertFalse(mailSender.greetingsSent);
     }
 
-    private class TestableBirthdayService extends BirthdayService {
-        public boolean messageSent = false;
+    private class SpyMailSender extends MailSender {
+        public boolean greetingsSent = false;
+
+        public SpyMailSender() {
+            super(null, -1);
+        }
 
         @Override
-        protected void sendMessage(Employee employee, MailSender mailSender) throws AddressException, MessagingException {
-            messageSent = true;
+        public void sendGreetingsTo(Employee employee) throws AddressException, MessagingException {
+            greetingsSent = true;
         }
     }
 }

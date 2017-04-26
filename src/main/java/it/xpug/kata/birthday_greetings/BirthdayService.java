@@ -23,12 +23,9 @@ public class BirthdayService {
 			String[] employeeData = str.split(", ");
 			Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], employeeData[3]);
 			if (employee.isBirthday(xDate)) {
-				sendMessage(employee, mailSender);
+				mailSender.sendGreetingsTo(employee);
 			}
 		}
 	}
 
-	protected void sendMessage(Employee employee, MailSender mailSender) throws AddressException, MessagingException {
-		mailSender.sendGreetingsTo(employee);
-	}
 }
