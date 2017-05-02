@@ -18,7 +18,6 @@ public class MailSender implements Sender {
         this.smtpPort = smtpPort;
     }
 
-    @Override
     public void sendGreetingsTo(Employee employee) throws AddressException, MessagingException {
         String recipient = employee.getEmail();
         String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
