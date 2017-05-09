@@ -25,7 +25,7 @@ public class BirthdayService {
 		}
 	}
 
-	private List<Employee> getEmployees(String fileName) throws IOException, ParseException {
+	protected List<Employee> getEmployees(String fileName) throws IOException, ParseException {
 		List<Employee> employees = new ArrayList<Employee>();
 		BufferedReader in = new BufferedReader(new FileReader(fileName));
 		String str = in.readLine(); // skip header
