@@ -8,10 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileEmployeesRepository {
-    public FileEmployeesRepository() {
+    private String fileName;
+
+    public FileEmployeesRepository(String fileName) {
+        this.fileName = fileName;
     }
 
-    protected List<Employee> getEmployees(String fileName) throws IOException, ParseException {
+    public List<Employee> all() throws IOException, ParseException {
         List<Employee> employees = new ArrayList<Employee>();
         BufferedReader in = new BufferedReader(new FileReader(fileName));
         String str = in.readLine(); // skip header

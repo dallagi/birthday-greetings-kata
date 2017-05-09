@@ -23,8 +23,7 @@ public class BirthdayService {
 	}
 
 	protected List<Employee> getEmployees(String fileName) throws IOException, ParseException {
-		FileEmployeesRepository fileEmployeesRepository = new FileEmployeesRepository();
-		return fileEmployeesRepository.getEmployees(fileName);
+		return new FileEmployeesRepository(fileName).all();
 	}
 
 }
