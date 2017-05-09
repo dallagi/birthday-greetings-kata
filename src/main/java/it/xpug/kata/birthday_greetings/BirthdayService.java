@@ -22,6 +22,14 @@ public class BirthdayService {
 		}
 	}
 
+	public void sendGreetings(XDate xDate, EmployeesRepository employeesRepository, Sender sender) throws IOException, ParseException, MessagingException {
+		for (Employee employee: employeesRepository.all()) {
+			if (employee.isBirthday(xDate)) {
+				sender.sendGreetingsTo(employee);
+			}
+		}
+	}
+
 	protected List<Employee> getEmployees(String fileName) throws IOException, ParseException {
 		return new FileEmployeesRepository(fileName).all();
 	}
