@@ -1,5 +1,6 @@
 package it.xpug.kata.birthday_greetings;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -24,10 +25,15 @@ public class BirthdayServiceTest {
     @Mock
     private EmployeesRepository employeesRepository;
 
+    private BirthdayService birthdayService;
+
+    @Before
+    public void setUp() throws Exception {
+        birthdayService = new BirthdayService(employeesRepository, sender);
+    }
+
     @Test
     public void should_send_message() throws Exception {
-        BirthdayService birthdayService = new BirthdayService(employeesRepository, sender);
-
         when(employeesRepository.all()).thenReturn(singletonList(anEmployWith(BIRTHDAY_DATE)));
 
         birthdayService.sendGreetings(new XDate(BIRTHDAY_DATE));
@@ -37,8 +43,6 @@ public class BirthdayServiceTest {
 
     @Test
     public void should_not_send_message() throws Exception {
-        BirthdayService birthdayService = new BirthdayService(employeesRepository, sender);
-
         when(employeesRepository.all()).thenReturn(singletonList(anEmployWith(BIRTHDAY_DATE)));
 
         birthdayService.sendGreetings(new XDate(ANOTHER_DATE));
@@ -48,7 +52,6 @@ public class BirthdayServiceTest {
 
     @Test
     public void should_not_send_message_without_employees() throws Exception {
-        BirthdayService birthdayService = new BirthdayService(employeesRepository, sender);
         when(employeesRepository.all()).thenReturn(Collections.<Employee>emptyList());
 
         birthdayService.sendGreetings(new XDate("2008/10/08"));
