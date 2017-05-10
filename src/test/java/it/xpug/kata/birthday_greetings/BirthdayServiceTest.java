@@ -26,32 +26,32 @@ public class BirthdayServiceTest {
 
     @Test
     public void should_send_message() throws Exception {
-        BirthdayService birthdayService = new BirthdayService(employeesRepository);
+        BirthdayService birthdayService = new BirthdayService(employeesRepository, sender);
 
         when(employeesRepository.all()).thenReturn(singletonList(anEmployWith(BIRTHDAY_DATE)));
 
-        birthdayService.sendGreetings(new XDate(BIRTHDAY_DATE), sender);
+        birthdayService.sendGreetings(new XDate(BIRTHDAY_DATE));
 
         verify(sender).sendGreetingsTo(any(Employee.class));
     }
 
     @Test
     public void should_not_send_message() throws Exception {
-        BirthdayService birthdayService = new BirthdayService(employeesRepository);
+        BirthdayService birthdayService = new BirthdayService(employeesRepository, sender);
 
         when(employeesRepository.all()).thenReturn(singletonList(anEmployWith(BIRTHDAY_DATE)));
 
-        birthdayService.sendGreetings(new XDate(ANOTHER_DATE), sender);
+        birthdayService.sendGreetings(new XDate(ANOTHER_DATE));
 
         verify(sender, never()).sendGreetingsTo(any(Employee.class));
     }
 
     @Test
     public void should_not_send_message_without_employees() throws Exception {
-        BirthdayService birthdayService = new BirthdayService(employeesRepository);
+        BirthdayService birthdayService = new BirthdayService(employeesRepository, sender);
         when(employeesRepository.all()).thenReturn(Collections.<Employee>emptyList());
 
-        birthdayService.sendGreetings(new XDate("2008/10/08"), sender);
+        birthdayService.sendGreetings(new XDate("2008/10/08"));
 
         verify(sender, never()).sendGreetingsTo(any(Employee.class));
     }

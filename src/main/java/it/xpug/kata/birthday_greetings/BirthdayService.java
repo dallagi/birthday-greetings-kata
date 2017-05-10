@@ -9,22 +9,23 @@ import javax.mail.internet.AddressException;
 public class BirthdayService {
 
 	private EmployeesRepository employeesRepository;
+    private Sender sender;
 
     public BirthdayService() {
     }
 
-    public BirthdayService(EmployeesRepository employeesRepository) {
-
+    public BirthdayService(EmployeesRepository employeesRepository, Sender sender) {
         this.employeesRepository = employeesRepository;
+        this.sender = sender;
     }
 
 	public void sendGreetings(String fileName, XDate xDate, String smtpHost, int smtpPort) throws IOException, ParseException, AddressException, MessagingException {
-		Sender sender = new MailSender(smtpHost, smtpPort);
-        this.employeesRepository = new FileEmployeesRepository(fileName);
-        sendGreetings(xDate, sender);
+		sender = new MailSender(smtpHost, smtpPort);
+        employeesRepository = new FileEmployeesRepository(fileName);
+        sendGreetings(xDate);
     }
 
-    public void sendGreetings(XDate xDate, Sender sender) throws IOException, ParseException, MessagingException {
+    public void sendGreetings(XDate xDate) throws IOException, ParseException, MessagingException {
 		for (Employee employee: employeesRepository.all()) {
 			if (employee.isBirthday(xDate)) {
 				sender.sendGreetingsTo(employee);
