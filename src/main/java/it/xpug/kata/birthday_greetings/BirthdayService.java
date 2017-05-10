@@ -11,18 +11,9 @@ public class BirthdayService {
 	private EmployeesRepository employeesRepository;
     private Sender sender;
 
-    public BirthdayService() {
-    }
-
     public BirthdayService(EmployeesRepository employeesRepository, Sender sender) {
         this.employeesRepository = employeesRepository;
         this.sender = sender;
-    }
-
-	public void sendGreetings(String fileName, XDate xDate, String smtpHost, int smtpPort) throws IOException, ParseException, AddressException, MessagingException {
-		sender = new MailSender(smtpHost, smtpPort);
-        employeesRepository = new FileEmployeesRepository(fileName);
-        sendGreetings(xDate);
     }
 
     public void sendGreetings(XDate xDate) throws IOException, ParseException, MessagingException {
