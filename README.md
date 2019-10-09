@@ -1,3 +1,6 @@
+# Are you interested in kata written in kotlin?
+Go to `kotlin` branch ;)
+
 # What's this?
 
 This is a simple refactoring exercise that is meant to teach something about dependency inversion and dependency injection.
