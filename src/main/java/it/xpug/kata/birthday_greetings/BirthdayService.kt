@@ -13,7 +13,6 @@ import javax.mail.internet.MimeMessage
 
 class BirthdayService {
 
-    @Throws(IOException::class, ParseException::class, AddressException::class, MessagingException::class)
     fun sendGreetings(fileName: String, xDate: XDate, smtpHost: String, smtpPort: Int) {
         val line = File(fileName).readLines().iterator()
 
@@ -32,7 +31,6 @@ class BirthdayService {
         }
     }
 
-    @Throws(AddressException::class, MessagingException::class)
     private fun sendMessage(smtpHost: String, smtpPort: Int, sender: String, subject: String, body: String, recipient: String) {
         // Create a mail session
         val props = java.util.Properties()
