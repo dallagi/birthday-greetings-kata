@@ -15,41 +15,34 @@ class Employee(val firstName: String, private val lastName: String, birthDate: S
     override fun hashCode(): Int {
         val prime = 31
         var result = 1
-        result = prime * result + (parsedBirthDate.hashCode() ?: 0)
-        result = prime * result + (email.hashCode() ?: 0)
-        result = prime * result + (firstName.hashCode() ?: 0)
-        result = prime * result + (lastName.hashCode() ?: 0)
+        result = prime * result + parsedBirthDate.hashCode()
+        result = prime * result + email.hashCode()
+        result = prime * result + firstName.hashCode()
+        result = prime * result + lastName.hashCode()
         return result
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (this === obj)
+    override fun equals(other: Any?): Boolean {
+        if (this === other)
             return true
-        if (obj == null)
+        if (other == null)
             return false
-        if (obj !is Employee)
+        if (other !is Employee)
             return false
-        val other = obj as Employee?
-        if (parsedBirthDate == null) {
-            if (other!!.parsedBirthDate != null)
-                return false
-        } else if (parsedBirthDate != other!!.parsedBirthDate)
+        val another = other as Employee?
+
+        if (parsedBirthDate != another!!.parsedBirthDate)
             return false
-        if (email == null) {
-            if (other.email != null)
-                return false
-        } else if (email != other.email)
+
+        if (email != another.email)
             return false
-        if (firstName == null) {
-            if (other.firstName != null)
-                return false
-        } else if (firstName != other.firstName)
+
+        if (firstName != another.firstName)
             return false
-        if (lastName == null) {
-            if (other.lastName != null)
-                return false
-        } else if (lastName != other.lastName)
+
+        if (lastName != another.lastName)
             return false
+
         return true
     }
 }

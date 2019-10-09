@@ -31,11 +31,11 @@ class XDate {
         return date!!.hashCode()
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (obj !is XDate)
+    override fun equals(other: Any?): Boolean {
+        if (other !is XDate)
             return false
-        val other = obj as XDate?
-        return other!!.date == this.date
+
+        return (other as XDate?)!!.date == this.date
     }
 
     private fun getPartOfDate(part: Int): Int {
