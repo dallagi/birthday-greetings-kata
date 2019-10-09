@@ -29,7 +29,7 @@ class AcceptanceTest {
 
         assertEquals("message not sent?", 1, mailServer.receivedEmailSize.toLong())
         val message = mailServer.receivedEmail.next() as SmtpMessage
-        assertEquals("Happy Birthday, dear John!", message.body)
+        assertEquals("Happy Birthday, dear John", message.body)
         assertEquals("Happy Birthday!", message.getHeaderValue("Subject"))
         val recipients = message.getHeaderValues("To")
         assertEquals(1, recipients.size.toLong())
