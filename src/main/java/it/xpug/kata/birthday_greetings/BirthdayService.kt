@@ -5,12 +5,9 @@ import java.io.File
 class BirthdayService {
 
     fun sendGreetings(fileName: String, xDate: XDate, mailSender: Sender) {
-        val line = File(fileName).readLines().iterator()
+        val lines = readFrom(fileName)
 
-        line.next()
-
-        while(line.hasNext()) {
-            val str = line.next()
+        lines.forEach { str ->
             val employeeData = str.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val employee = Employee(employeeData[1], employeeData[0], employeeData[2], employeeData[3])
             if (employee.isBirthday(xDate)) {
@@ -20,6 +17,12 @@ class BirthdayService {
                 mailSender.send("sender@here.com", subject, body, recipient)
             }
         }
+    }
+
+    private fun readFrom(fileName: String): MutableList<String> {
+        val lines = File(fileName).readLines().toMutableList()
+        lines.removeAt(0)
+        return lines
     }
 }
 
