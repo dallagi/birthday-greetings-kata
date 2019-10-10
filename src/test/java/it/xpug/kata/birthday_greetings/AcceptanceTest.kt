@@ -28,7 +28,7 @@ class AcceptanceTest {
 
     @Test
     fun willSendGreetings_whenItsSomebodysBirthday() {
-        birthdayService.sendGreetings("employee_data.txt", XDate("2008/10/08"), mailSender)
+        birthdayService.sendGreetings(XDate("2008/10/08"), mailSender, FileEmployeeRepository("employee_data.txt"))
 
         assertEquals("message not sent?", 1, mailServer.receivedEmailSize.toLong())
         val message = mailServer.receivedEmail.next() as SmtpMessage
@@ -41,7 +41,7 @@ class AcceptanceTest {
 
     @Test
     fun willNotSendEmailsWhenNobodysBirthday() {
-        birthdayService.sendGreetings("employee_data.txt", XDate("2008/01/01"), mailSender)
+        birthdayService.sendGreetings(XDate("2008/01/01"), mailSender, FileEmployeeRepository("employee_data.txt"))
 
         assertEquals("what? messages?", 0, mailServer.receivedEmailSize.toLong())
     }
