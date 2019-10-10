@@ -1,15 +1,18 @@
 package it.xpug.kata.birthday_greetings
 
-import org.junit.Assert.*
-
-import org.junit.*
-
-import com.dumbster.smtp.*
+import com.dumbster.smtp.SimpleSmtpServer
+import com.dumbster.smtp.SmtpMessage
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
 
 
 class AcceptanceTest {
     private lateinit var birthdayService: BirthdayService
     private lateinit var mailServer: SimpleSmtpServer
+
+    private val mailSender = MailSender("localhost", NONSTANDARD_PORT)
 
     @Before
     fun setUp() {
@@ -25,7 +28,7 @@ class AcceptanceTest {
 
     @Test
     fun willSendGreetings_whenItsSomebodysBirthday() {
-        birthdayService.sendGreetings("employee_data.txt", XDate("2008/10/08"), "localhost", NONSTANDARD_PORT)
+        birthdayService.sendGreetings("employee_data.txt", XDate("2008/10/08"), mailSender)
 
         assertEquals("message not sent?", 1, mailServer.receivedEmailSize.toLong())
         val message = mailServer.receivedEmail.next() as SmtpMessage
@@ -38,7 +41,7 @@ class AcceptanceTest {
 
     @Test
     fun willNotSendEmailsWhenNobodysBirthday() {
-        birthdayService.sendGreetings("employee_data.txt", XDate("2008/01/01"), "localhost", NONSTANDARD_PORT)
+        birthdayService.sendGreetings("employee_data.txt", XDate("2008/01/01"), mailSender)
 
         assertEquals("what? messages?", 0, mailServer.receivedEmailSize.toLong())
     }
