@@ -6,8 +6,8 @@ import javax.mail.Transport
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
-class MailSender(private val smtpHost: String, private val smtpPort: Int) {
-    fun sendMessage(sender: String, subject: String, body: String, recipient: String) {
+class MailSender(private val smtpHost: String, private val smtpPort: Int) : Sender {
+    override fun send(sender: String, subject: String, body: String, recipient: String) {
         // Create a mail session
         val props = java.util.Properties()
         props["mail.smtp.host"] = smtpHost

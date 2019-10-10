@@ -4,7 +4,7 @@ import java.io.File
 
 class BirthdayService {
 
-    fun sendGreetings(fileName: String, xDate: XDate, mailSender: MailSender) {
+    fun sendGreetings(fileName: String, xDate: XDate, mailSender: Sender) {
         val line = File(fileName).readLines().iterator()
 
         line.next()
@@ -17,7 +17,7 @@ class BirthdayService {
                 val recipient = employee.email
                 val body = "Happy Birthday, dear %NAME%".replace("%NAME%", employee.firstName)
                 val subject = "Happy Birthday!"
-                mailSender.sendMessage("sender@here.com", subject, body, recipient)
+                mailSender.send("sender@here.com", subject, body, recipient)
             }
         }
     }
