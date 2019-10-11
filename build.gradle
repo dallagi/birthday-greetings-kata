@@ -16,6 +16,7 @@ dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     compile 'javax.mail:mail:1.4'
     compile 'javax.activation:activation:1.1'
+    testCompile 'org.assertj:assertj-core:3.13.2'
     testCompile 'dumbster:dumbster:1.6'
     testCompile 'junit:junit:4.12'
 }

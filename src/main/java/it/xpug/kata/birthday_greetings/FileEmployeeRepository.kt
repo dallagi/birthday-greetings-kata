@@ -7,7 +7,7 @@ class FileEmployeeRepository(private val fileName: String): EmployeeRepository {
     override fun all(): List<Employee> {
         return File(fileName).readLines()
             .toMutableList()
-            .also { it.removeAt(0) }
+            .also { if(it.size > 0) it.removeAt(0) }
             .toList()
             .map(asEmployee())
     }
