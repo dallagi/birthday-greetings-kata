@@ -2,12 +2,12 @@ package it.xpug.kata.birthday_greetings
 
 import java.io.File
 
-class FileEmployeeRepository(private val fileName: String): EmployeeRepository {
+class FileEmployeeRepository(private val fileName: String) : EmployeeRepository {
 
     override fun all(): List<Employee> {
         return File(fileName).readLines()
             .toMutableList()
-            .also { if(it.size > 0) it.removeAt(0) }
+            .also(removeHeadLine())
             .toList()
             .map(asEmployee())
     }
@@ -19,4 +19,7 @@ class FileEmployeeRepository(private val fileName: String): EmployeeRepository {
             Employee(firstName, lastName, birthDate, email)
         }
     }
+
+    private fun removeHeadLine(): (MutableList<String>) -> Unit =
+        { lines -> if (lines.size > 0) lines.removeAt(0) }
 }
