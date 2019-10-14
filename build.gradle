@@ -19,6 +19,7 @@ dependencies {
     testCompile 'org.assertj:assertj-core:3.13.2'
     testCompile 'dumbster:dumbster:1.6'
     testCompile 'junit:junit:4.12'
+    testCompile group: 'com.nhaarman', name: 'mockito-kotlin', version: '1.6.0'
 }
 
 compileKotlin {

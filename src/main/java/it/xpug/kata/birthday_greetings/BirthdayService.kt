@@ -1,16 +1,19 @@
 package it.xpug.kata.birthday_greetings
 
-class BirthdayService {
+class BirthdayService(private val mailSender: Sender, private val fileEmployeeRepository: EmployeeRepository) {
 
-    fun sendGreetings(xDate: XDate, mailSender: Sender, fileEmployeeRepository: EmployeeRepository) {
+    private val sender = "sender@here.com"
+    private val subject = "Happy Birthday!"
+
+    fun sendGreetings(xDate: XDate) {
         fileEmployeeRepository.all().forEach { employee ->
             if (employee.isBirthday(xDate)) {
-                val recipient = employee.email
-                val body = "Happy Birthday, dear %NAME%".replace("%NAME%", employee.firstName)
-                val subject = "Happy Birthday!"
-                mailSender.send("sender@here.com", subject, body, recipient)
+                mailSender.send(sender, subject, body(employee), employee.email)
             }
         }
     }
+
+    private fun body(employee: Employee) =
+        "Happy Birthday, dear %NAME%".replace("%NAME%", employee.firstName)
 }
 
