@@ -20,7 +20,7 @@ class AcceptanceTest {
     @After
     fun tearDown() {
         mailServer.stop()
-        Thread.sleep(200)
+        Thread.sleep(1000)
     }
 
     @Test
