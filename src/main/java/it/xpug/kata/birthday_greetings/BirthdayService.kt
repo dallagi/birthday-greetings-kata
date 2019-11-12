@@ -14,18 +14,23 @@ class BirthdayService(private val employees: Employees) {
 
     @Throws(IOException::class, ParseException::class, AddressException::class, MessagingException::class)
     fun sendGreetings(xDate: XDate, smtpHost: String, smtpPort: Int) {
-        employees.all().forEach { employee ->
-            if (employee.isBirthday(xDate)) {
-                val recipient = employee.email
-                val body = "Happy Birthday, dear %NAME%".replace("%NAME%", employee.firstName)
-                val subject = "Happy Birthday!"
-                sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient)
-            }
+        employees.withBirthdayOn(xDate).forEach { employee ->
+            val recipient = employee.email
+            val body = "Happy Birthday, dear %NAME%".replace("%NAME%", employee.firstName)
+            val subject = "Happy Birthday!"
+            sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient)
         }
     }
 
     @Throws(AddressException::class, MessagingException::class)
-    private fun sendMessage(smtpHost: String, smtpPort: Int, sender: String, subject: String, body: String, recipient: String) {
+    private fun sendMessage(
+        smtpHost: String,
+        smtpPort: Int,
+        sender: String,
+        subject: String,
+        body: String,
+        recipient: String
+    ) {
         // Create a mail session
         val props = java.util.Properties()
         props["mail.smtp.host"] = smtpHost
