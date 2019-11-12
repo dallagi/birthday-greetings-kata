@@ -14,7 +14,10 @@ class AcceptanceTest {
     @Before
     fun setUp() {
         mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT)
-        birthdayService = BirthdayService(FileEmployees("employee_data.txt"))
+        birthdayService = BirthdayService(
+            EmailMessageSender("localhost", NONSTANDARD_PORT, "from@xxx.com"),
+            FileEmployees("employee_data.txt")
+        )
     }
 
     @After
@@ -25,7 +28,7 @@ class AcceptanceTest {
 
     @Test
     fun willSendGreetings_whenItsSomebodysBirthday() {
-        birthdayService.sendGreetings(XDate("2008/10/08"), "localhost", NONSTANDARD_PORT)
+        birthdayService.sendGreetings(XDate("2008/10/08"))
 
         assertEquals("message not sent?", 1, mailServer.receivedEmailSize.toLong())
         val message = mailServer.receivedEmail.next() as SmtpMessage
@@ -38,13 +41,12 @@ class AcceptanceTest {
 
     @Test
     fun willNotSendEmailsWhenNobodysBirthday() {
-        birthdayService.sendGreetings(XDate("2008/01/01"), "localhost", NONSTANDARD_PORT)
+        birthdayService.sendGreetings(XDate("2008/01/01"))
 
         assertEquals("what? messages?", 0, mailServer.receivedEmailSize.toLong())
     }
 
     companion object {
-
         private val NONSTANDARD_PORT = 9999
     }
 }
