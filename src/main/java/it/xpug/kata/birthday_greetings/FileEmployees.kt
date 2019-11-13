@@ -13,9 +13,11 @@ class FileEmployees(private val path: String) : Employees {
     }
 
     private fun employeeFrom(line: String): Employee {
-        val data = line.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        return Employee(data[1], data[0], data[2], data[3])
+        val columns = split(line)
+        return Employee(columns[1], columns[0], columns[2], columns[3])
     }
+
+    private fun split(line: String) = line.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
     private fun stripHeader(lines: List<String>) = lines.drop(1)
 }

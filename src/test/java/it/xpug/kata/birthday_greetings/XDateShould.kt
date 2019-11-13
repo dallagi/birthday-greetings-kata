@@ -4,16 +4,16 @@ import org.junit.Assert.*
 import org.junit.*
 
 
-class XDateTest {
+class XDateShould {
     @Test
-    fun getters() {
+    fun provide_getters_for_day_and_month() {
         val date = XDate("1789/01/24")
         assertEquals(1, date.month.toLong())
         assertEquals(24, date.day.toLong())
     }
 
     @Test
-    fun isSameDate() {
+    fun check_equality_of_day_and_month() {
         val date = XDate("1789/01/24")
         val sameDay = XDate("2001/01/24")
         val notSameDay = XDate("1789/01/25")
@@ -25,7 +25,7 @@ class XDateTest {
     }
 
     @Test
-    fun equality() {
+    fun support_equality_of_date() {
         val base = XDate("2000/01/02")
         val same = XDate("2000/01/02")
         val different = XDate("2000/01/04")
