@@ -5,19 +5,12 @@ import java.text.ParseException
 import javax.mail.MessagingException
 import javax.mail.internet.AddressException
 
-class BirthdayService(private val messageSender: MessageSender, private val employees: Employees) {
+class BirthdayService(private val greetingSender: GreetingSender, private val employees: Employees) {
 
     @Throws(IOException::class, ParseException::class, AddressException::class, MessagingException::class)
-    fun sendGreetings(xDate: XDate) {
-        employees.withBirthdayOn(xDate).forEach { employee ->
-            messageSender.send(happyBirthdayMessageFor(employee))
+    fun sendGreetings(date: XDate) {
+        employees.withBirthdayOn(date).forEach { employee ->
+            greetingSender.send(Greeting(employee))
         }
-    }
-
-    private fun happyBirthdayMessageFor(employee: Employee): Message {
-        val body = "Happy Birthday, dear %NAME%".replace("%NAME%", employee.firstName)
-        val subject = "Happy Birthday!"
-
-        return Message(subject, body, employee)
     }
 }

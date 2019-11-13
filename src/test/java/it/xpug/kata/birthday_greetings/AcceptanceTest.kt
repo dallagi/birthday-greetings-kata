@@ -15,7 +15,7 @@ class AcceptanceTest {
     fun setUp() {
         mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT)
         birthdayService = BirthdayService(
-            EmailMessageSender("localhost", NONSTANDARD_PORT, "from@xxx.com"),
+            EmailGreetingSender("localhost", NONSTANDARD_PORT, "from@xxx.com"),
             FileEmployees("employee_data.txt")
         )
     }
@@ -47,6 +47,6 @@ class AcceptanceTest {
     }
 
     companion object {
-        private val NONSTANDARD_PORT = 9999
+        private const val NONSTANDARD_PORT = 9999
     }
 }
